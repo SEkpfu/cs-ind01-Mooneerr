@@ -1,0 +1,78 @@
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        Console.WriteLine("Введите размеры массивов:");
+        int size = InputArraySize();
+
+        int[] a = InputArray(size);
+        int[] b = InputArray(size);
+        int[] c = GenerateRandomArray(size);
+
+        int[] result = MergeArrays(a, b, c);
+
+        Console.WriteLine("\nРезультаты работы метода:");
+        PrintArray(result);
+    }
+
+    static int InputArraySize()
+    {
+        int size;
+        while (true)
+        {
+            Console.Write("Размер массивов: ");
+            if (int.TryParse(Console.ReadLine(), out size) && size > 0)
+            {
+                return size;
+            }
+            else
+            {
+                Console.WriteLine("Некорректный ввод. Попробуйте снова.");
+            }
+        }
+    }
+
+    static int[] InputArray(int size)
+    {
+        int[] array = new int[size];
+        for (int i = 0; i < size; i++)
+        {
+            Console.Write($"Введите элемент массива {i + 1}: ");
+            array[i] = int.Parse(Console.ReadLine());
+        }
+        return array;
+    }
+
+    static int[] GenerateRandomArray(int size)
+    {
+        Random random = new Random();
+        int[] array = new int[size];
+        for (int i = 0; i < size; i++)
+        {
+            array[i] = random.Next(1, 101); // Генерация случайного числа от 1 до 100
+        }
+        return array;
+    }
+
+    static int[] MergeArrays(int[] a, int[] b, int[] c)
+    {
+        int[] result = new int[a.Length * 2];
+        for (int i = 0; i < a.Length; i++)
+        {
+            result[i * 2] = (a[i] + b[i]) / 2;
+            result[i * 2 + 1] = c[i];
+        }
+        return result;
+    }
+
+    static void PrintArray(int[] array)
+    {
+        foreach (var element in array)
+        {
+            Console.Write($"{element} ");
+        }
+        Console.WriteLine();
+    }
+}
