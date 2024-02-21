@@ -1,0 +1,34 @@
+using System;
+
+class Program {
+    static void Main() {
+        double h, r, mxVal = 0, summ = 0, val;
+        string resp;
+        int cnt = 0, cnt10 = 0, ind, i = 1;
+        
+        while (true) {
+            Console.WriteLine("Do you want to write radius and height of cylinder? (y - yes, n - no)");
+            resp = Console.ReadLine();
+            if (resp == "n") {
+                break;
+            }
+            
+            cnt++;
+            h, r = Console.ReadLine();
+            val = Math.PI * r * r * h;
+            Console.WriteLine($"{i} cylinder's value is {val}");
+            summ += val;
+            
+            if (val > mxVal) {
+                ind = i;
+                mxVal = val;
+            }
+            
+            if (val > 10) {
+                cnt10++;
+            }
+            i++;
+        }
+        Console.WriteLine($"Total count = {cnt}\nMax value = {mxVal}\nSum of values = {summ}\nCount above 10 = {cnt10}");
+    }
+}
