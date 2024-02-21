@@ -1,0 +1,94 @@
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        double[] distances = new double[100];
+        for (int i = 0; i < 100; i++)
+        {
+            Console.Write($"Введите расстояние {i + 1}: ");
+            distances[i] = InputDistance();
+        }
+
+        Console.WriteLine($"Самое большое расстояние: {GetMaxDistance(distances)}");
+        Console.WriteLine($"Номер самого маленького расстояния: {GetMinDistanceIndex(distances) + 1}");
+        Console.WriteLine($"Количество расстояний, совпавших с 5 км 5 м 5 см 5 мм: {CountEqual(distances, 5, 5, 5, 5)}");
+    }
+
+    static double InputDistance()
+    {
+        double kilometers, meters, centimeters, millimeters;
+
+        Console.Write("Введите километры: ");
+        while (!double.TryParse(Console.ReadLine(), out kilometers))
+        {
+            Console.WriteLine("Некорректный ввод. Попробуйте снова.");
+            Console.Write("Введите километры: ");
+        }
+
+        Console.Write("Введите метры: ");
+        while (!double.TryParse(Console.ReadLine(), out meters))
+        {
+            Console.WriteLine("Некорректный ввод. Попробуйте снова.");
+            Console.Write("Введите метры: ");
+        }
+
+        Console.Write("Введите сантиметры: ");
+        while (!double.TryParse(Console.ReadLine(), out centimeters))
+        {
+            Console.WriteLine("Некорректный ввод. Попробуйте снова.");
+            Console.Write("Введите сантиметры: ");
+        }
+
+        Console.Write("Введите миллиметры: ");
+        while (!double.TryParse(Console.ReadLine(), out millimeters))
+        {
+            Console.WriteLine("Некорректный ввод. Попробуйте снова.");
+            Console.Write("Введите миллиметры: ");
+        }
+
+        return kilometers * 1000 + meters + centimeters / 100 + millimeters / 1000;
+    }
+
+    static double GetMaxDistance(double[] distances)
+    {
+        double maxDistance = double.MinValue;
+        foreach (var distance in distances)
+        {
+            if (distance > maxDistance)
+            {
+                maxDistance = distance;
+            }
+        }
+        return maxDistance;
+    }
+
+    static int GetMinDistanceIndex(double[] distances)
+    {
+        double minDistance = double.MaxValue;
+        int minIndex = -1;
+        for (int i = 0; i < distances.Length; i++)
+        {
+            if (distances[i] < minDistance)
+            {
+                minDistance = distances[i];
+                minIndex = i;
+            }
+        }
+        return minIndex;
+    }
+
+    static int CountEqual(double[] distances, double kilometers, double meters, double centimeters, double millimeters)
+    {
+        int count = 0;
+        foreach (var distance in distances)
+        {
+            if (Math.Abs(distance - (kilometers * 1000 + meters + centimeters / 100 + millimeters / 1000)) < double.Epsilon)
+            {
+                count++;
+            }
+        }
+        return count;
+    }
+}
